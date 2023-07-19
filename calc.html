@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calorie-calculator</title>
+    <link rel="stylesheet" href="styles-calc.css">
+    <script></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html" aria-current="page">home</a>
+            </li>
+            <li>
+                <a href="calc.html">calorie-calculator</a>
+            </li>
+            <li>
+                <a href="activity.html">activity-tracker</a>
+            </li>
+        </ul>
+    </nav>
+    <h1 id="title">calculate your calories - the easy way.</h1>
+
+    <fieldset class="main-input">
+        <form action="/calc-calorie" method="post">
+            <label for="food-input">
+                <input type="text" name="food-input" id="food-input" placeholder="Enter what you ate today">
+            </label>
+            <button type="submit">calculate</button>
+        </form>
+    </fieldset>
+</body>
+</html>
