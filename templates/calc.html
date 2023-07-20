@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+    {% block head %} <link rel="stylesheet" href="/static/styles-calc.css"> {% endblock %}
+
+    {% block main %}
+    <h1 id="title">calculate your calories - the easy way.</h1>
+
+    <fieldset class="main-input">
+        <form action="/calc-calorie" method="post">
+            <label for="food-input">
+                <input type="text" name="food-input" id="food-input" placeholder="Enter what you ate today">
+            </label>
+            <button type="submit">calculate</button>
+        </form>
+    </fieldset>
+
+    {% endblock %}

@@ -3,25 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitto - home</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    {% block head %}{% endblock %}
     <script src="index.js"></script>
 </head>
 <body>
-    <div class="container-nav">
     <nav>
         <ul>
             <li>
-                <a href="index.html" aria-current="page">home</a>
+                <a href="/" aria-current="page">home</a>
             </li>
             <li>
-                <a href="calc.html">calorie-calculator</a>
+                <a href="/calorie">calorie-calculator</a>
             </li>
             <li>
-                <a href="activity.html">activity-tracker</a>
+                <a href="/activity">activity-tracker</a>
             </li>
         </ul>
     </nav>
-    </div>
+
+    {% block main %}{% endblock %}
 </body>
 </html>
