@@ -1,16 +1,99 @@
-{% extends "layout.html" %}
-    {% block head %} <link rel="stylesheet" href="/static/styles-calc.css"> {% endblock %}
-
-    {% block main %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitto - calc</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/styles-calc.css"> 
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer src="/static/index.js"></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li>
+                <a href="index.html" aria-current="page">home</a>
+            </li>
+            <li>
+                <a href="calc.html">calorie-calculator</a>
+            </li>
+            <li>
+                <a href="#">activity-tracker</a>
+            </li>
+        </ul>
+    </nav>
     <h1 id="title">calculate your calories - the easy way.</h1>
 
     <fieldset class="main-input">
-        <form action="/calc-calorie" method="post">
+        <form>
             <label for="food-input">
-                <input type="text" name="food-input" id="food-input" placeholder="Enter what you ate today">
+                <input type="text" name="food-input" id="food-input" autocomplete="off" placeholder="Enter what you ate today">
             </label>
-            <button type="submit">calculate</button>
+            <button id="calculate-btn" type="button">calculate</button>
         </form>
     </fieldset>
 
-    {% endblock %}
+    
+
+      
+        <div class="table_container">
+            <table class="boostrap4_dark">
+                
+            </table>
+        </div>
+       
+        <dialog class="modal" id="modal">
+        
+            <div class="dialogTitle"> 
+                <span id="foodTitleDialog"></span>
+                <button id="closeButton">&times;</button>
+            </div>
+            <div class="nutrition-summary">
+                <div class="box">
+                <div class="chartDiv">
+                    <canvas id="myChart" width="20%" height="20%"></canvas>
+                </div>
+                <div class="nutrition-amounts">
+                    <ul>
+                        <li><span class="dot" id="roundProtein"></span>Protein: <span id="proteinAmt"></span> <span class="percInline">(<span id="percProtein"></span>)</li>
+                        <li><span class="dot" id="roundcarbs"></span>Carbs: <span id="carbsAmt"></span> <span id="percInline">(<span id="percCarbs"></span></span>)</li>
+                        <li><span class="dot" id="roundfat"></span>Fat: <span id="fatAmt"></span> <span id="percInline"></span>(<span id="percFat"></span>)</li>
+                    </ul>
+                </div>
+                </div>
+
+                <div class="box2">
+                    <form class="formserving">
+                        <label for="timeofday">Time of Meal: 
+                            <select name="timeofday" id="timeofday">
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Snack">Snack</option>
+                                <option value="Dinner">Dinner</option>
+                            </select>
+                        </label>
+                        <label for="serving">Serving Size
+                            <input type="text" name="serving" value="1" id="serving">
+                            <select name="servingtype" id="servingtype">
+                                <option id="defaultOption" value=""></option>
+                                <option value="g">1g</option>
+                                <option value="100g">100g</option>
+                                <option value="1kg">1kg - 1000g</option>
+                                <option value="1tsp">1tsp - 4g</option>
+                                <option value="ml">1ml</option>
+                                <option value="100ml">100ml</option>
+                                <option value="1L">1L - 1000ml</option>
+                                <option value="slice">39g</option>
+                            </select>
+                        </label>
+                    </form>
+                </div>
+            </div>
+            <div class="dialogaddFood">
+                <button class="btn-addFood" id="btn-dialogAddFood" type="button">Add Food</button>
+            </div>
+        </dialog>
+    
+</body>
+</html>

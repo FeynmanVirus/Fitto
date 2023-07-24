@@ -76,22 +76,22 @@ function createTable(dict) {
      let row = table.insertRow(-1); // We are adding at the end
 
       // Create table cells
-    
       let c1 = row.insertCell(0);
       let c5 = row.insertCell(1);
-      let c6 = row.insertCell(2);
-      c1.className = 'key';
+      let c6 = row.insertCell(2 );
 
-   
     //   Add data to c1 and c2
-      c1.innerHTML = `<tr><td>${key} <span class="subtext">${dict[key][0]['ENERC_KCAL']} kcal</span> <span class="subtext">${dict[key][1]['measures']}</span> <span class="subtext">${Math.round(dict[key][2]['weight'] * 100) / 100}g</span><span class="subtext">${dict[key][3]['category']}</span></td></tr>`;
-
+      c1.innerHTML = `<tr><td><span class="key">${key}</span> <span class="subtext">${dict[key][0]['ENERC_KCAL'].toFixed(0)} kcal</span>
+      <span class="subtext">${dict[key][1]['measures']}</span> 
+      <span class="subtext">${dict[key][2]['weight'].toFixed(0)}g
+     </span><span class="subtext">${dict[key][3]['category']}</span></td></tr>`;
       c5.innerHTML = `
       <button class="btn-detail" type="button">See Details</button>`
       c6.innerHTML = `
       <button class="btn-item-add" id="btn-item-add" type="button">Add</button>`
     }
-    let detailBtn = document.getElementsByClassName('btn-detail');
+    
+    const detailBtn = document.getElementsByClassName('btn-detail');
     for (let i = 0; i < detailBtn.length; i++) {
         detailBtn[i].addEventListener('click', detailBtnClick);
 
@@ -101,7 +101,7 @@ function createTable(dict) {
 
 function detailBtnClick(event) {
     const btn = event.target;
-
+    
     // fetching the 'food label' value
     const tr = btn.closest('tr');
     const key = tr.getElementsByClassName('key')[0].innerText;
@@ -123,11 +123,11 @@ function detailBtnClick(event) {
             ctx.fillStyle = 'black';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText(globalDict[key][0]['ENERC_KCAL'] + "kcal", xCoor, yCoor); 
+            ctx.fillText(globalDict[key][0]['ENERC_KCAL'].toFixed(0) + "kcal", xCoor, yCoor); 
 
         }
     } 
-
+    
     // creating the chart
     const chart = new Chart(chartDoughnut, {
         type: 'doughnut',
@@ -139,7 +139,7 @@ function detailBtnClick(event) {
               ],
             datasets: [{
                 label: 'Nutritional value: ',
-                data: [globalDict[key][0]['PROCNT'], globalDict[key][0]['FAT'], globalDict[key][0]['CHOCDF']],
+                data: [globalDict[key][0]['PROCNT'].toFixed(2), globalDict[key][0]['FAT'].toFixed(2), globalDict[key][0]['CHOCDF'].toFixed(2)   ],
                 backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
@@ -165,14 +165,14 @@ function detailBtnClick(event) {
 
     // calculate nutrition% of total 
     const totalGrams = globalDict[key][0]['PROCNT'] + globalDict[key][0]['CHOCDF'] + globalDict[key][0]['FAT']
-    const proteinPercent = parseFloat((globalDict[key][0]['PROCNT'] / totalGrams) * 100).toFixed(2);
-    const carbsPercent = parseFloat((globalDict[key][0]['CHOCDF'] / totalGrams) * 100).toFixed(2);
-    const fatPercent = parseFloat((globalDict[key][0]['FAT'] / totalGrams) * 100).toFixed(2);
+    const proteinPercent = parseFloat((globalDict[key][0]['PROCNT'] / totalGrams) * 100).toFixed(1);
+    const carbsPercent = parseFloat((globalDict[key][0]['CHOCDF'] / totalGrams) * 100).toFixed(1);
+    const fatPercent = parseFloat((globalDict[key][0]['FAT'] / totalGrams) * 100).toFixed(1);
 
     // macro-nutrients' amount
-    document.getElementById('proteinAmt').innerText = globalDict[key][0]['PROCNT'] + "g";
-    document.getElementById('carbsAmt').innerText = globalDict[key][0]['CHOCDF'] + "g";
-    document.getElementById('fatAmt').innerText = globalDict[key][0]['FAT'] + "g";
+    document.getElementById('proteinAmt').innerText = globalDict[key][0]['PROCNT'].toFixed(2) + "g";
+    document.getElementById('carbsAmt').innerText = globalDict[key][0]['CHOCDF'].toFixed(2) + "g";
+    document.getElementById('fatAmt').innerText = globalDict[key][0]['FAT'].toFixed(2) + "g";
 
     // percent of total macro-nutrients
     document.getElementById('percProtein').innerText = proteinPercent + "%";
