@@ -1,7 +1,15 @@
+:root {
+    --text: #f6eded;
+    --background: #03001C;
+    --primary: #282A3A;
+    --secondary: #301E67;
+    --accent: #372279;
+}
+
 body {
-    background-color: #0f172a;
+    background-color: var(--background);
     font-family: "Open Sans", sans-serif;
-    color: #FAEDE3 !important;
+    color: var(--text);
 }
 
 

@@ -1,7 +1,15 @@
+:root {
+    --text: #f6eded;
+    --background: #03001C;
+    --primary: #282A3A;
+    --secondary: #301E67;
+    --accent: #372279;
+}
+
 body {
-    background-color: #0f172a;
+    background-color: var(--background);
     font-family: "Open Sans", sans-serif;
-    color: #FAEDE3;
+    color: var(--text);
 }
 
 nav {
@@ -38,10 +46,10 @@ fieldset {
 #food-input {
     display: block;
     margin: 20px auto;  
-    background-color: #1F2F56;
+    background-color: var(--primary);
     height: 30px;
     width: 20%;
-    border: 1px solid #314B89;
+    border: 1px solid var(--secondary);
     border-radius: 20px;
     padding-left: 15px;
     color: #FAEDE3;
@@ -53,79 +61,75 @@ fieldset {
 }
 
 #food-input:hover {
-    border-color: #4B6DBF;
+    border-color: var(--secondary);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 #food-input:focus {
     outline: none !important;
-    border-color: #4B6DBF;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    border-color: var(--secondary);
+    box-shadow: 0 0 0 0.25rem rgba(36, 26, 68, 0.5);
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     caret-color: transparent;
-    background-color: #1F2F56;
+    background-color: var(--primary);
     
 }
 
 #calculate-btn {
-    display: block;
-    margin: 20px auto;
-    background-color: #0B6DF4;
-    border: 0;
-    height: 30px;
-    width: 20%;
+    display: block !important;
+    margin: 20px auto !important;
+    height: 35px !important;
+    width: 20% !important;
     border-radius: 20px;
-    color: #FAEDE3;
-}
-
-#calculate-btn:hover {
-    background-color: #0044FF;
-    cursor: pointer;
+    color: var(--text);
 }
 
 table.boostrap4_dark {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #fff;
-    background-color: #1F2F56;
+    color: var(--text);
+    background-color: var(--primary);
     text-align: left;
     box-sizing: border-box;
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     width: 100%;
     margin-bottom: 1rem;
+    border-spacing: 0;
+    border-collapse: separate;
+    border-radius: 10px;
+    overflow: hidden;
+    /* border: 1px solid black; */
 }
 
-table.bootstrap4_dark td:first-child {
+.macronutrient {
     
 }
 
-table.boostrap4_dark thead th {
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #fff;
-    border-collapse: collapse;
-    box-sizing: border-box;
-    text-align: inherit;
-    padding: .75rem;
-    border-top: 1px solid #dee2e6;
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-}
+
 
 table.boostrap4_dark td {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    color: #fff;
+    /* color: #fff; */
     text-align: left;
     border-collapse: collapse;
     box-sizing: border-box;
-    border-radius: 10px;
+    border-bottom: 1px solid var(--background);
     padding: 0.75rem;
-    padding-left: 10px;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
+    padding-left: 15px;
+    vertical-align: middle;
+    /* border-top: 1px solid #dee2e6; */
+}
+
+tr:hover {
+    background-color: #1d1f2c;
+    cursor: pointer;
+}
+
+table.bootstrap4_dark a {
+    color: red;
 }
 
 .subtext {
@@ -151,7 +155,7 @@ table.boostrap4_dark td {
     height: 17vw;
     border-radius: 20px;
     overflow: hidden;
-
+    /* background-color: var(--primary) */
 }
 
 #closeButton {
@@ -215,19 +219,13 @@ table.boostrap4_dark td {
 }
 
 .btn-addFood {
-    display: block;
-    margin: 20px auto;
-    background-color: #0B6DF4;
-    border: 0;
+    display: block !important;
+    margin: 20px auto !important;
     height: 35px;
     cursor: pointer;
-    width: 20%;
+    width: 20% !important;
     border-radius: 20px;
     color: #FAEDE3; 
-}
-
-.btn-addFood:hover {
-    background-color: #0044FF;
 }
 
 #timeofday {
@@ -293,3 +291,61 @@ table.boostrap4_dark td {
     margin-top: 5px;
 }
 
+.btn-table-style {
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    
+}
+
+/* https://codepen.io/yuhomyan/pen/OJMejWJ */
+
+.btn-table-style, .btn-addFood, #calculate-btn {
+    background-color: var(--secondary) !important;
+    border: none;
+    z-index: 1;
+  }
+
+  .btn-table-style, .btn-addFood, #calculate-btn {
+    width: 65%;
+    color: white;
+    border-radius: 15px;
+    padding: 10px 25px;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.1),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    outline: none;
+  }
+
+.btn-table-style:after, .btn-addFood:after, #calculate-btn:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background-color: var(--accent);
+    border-radius: 15px;
+     box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.1),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    transition: all 0.3s ease;
+  }
+  .btn-table-style:hover, .btn-addFood:hover, #calculate-btn:hover {
+    color: #fff;
+  }
+  .btn-table-style:hover:after, .btn-addFood:hover:after, #calculate-btn:hover:after {
+    left: 0;
+    width: 100%;
+  }
+  .btn-table-style:active, .btn-addFood:active, #calculate-btn:active {
+    top: 2px;
+  }
