@@ -33,8 +33,6 @@ async function fetchApi(url) {
 
     const response = await fetch(url);
     const data = await response.json();
-     
-
     
 
     // parsing hints from json
@@ -79,36 +77,41 @@ function createTable(dict) {
       let c1 = row.insertCell(0);
       let c5 = row.insertCell(1);
       let c6 = row.insertCell(2 );
+      row.setAttribute('class', 'clickable');
 
     //   Add data to c1 and c2
-      c1.innerHTML = `<tr><td><span class="key">${key}</span> <span class="subtext">${dict[key][0]['ENERC_KCAL'].toFixed(0)} kcal</span>
+      c1.innerHTML = `<td><span class="key">${key}</span> <span class="subtext">${dict[key][0]['ENERC_KCAL'].toFixed(0)} kcal</span>
       <span class="subtext">${dict[key][1]['measures']}</span> 
       <span class="subtext">${dict[key][2]['weight'].toFixed(0)}g
-     </span><span class="subtext">${dict[key][3]['category']}</span></td></tr>`;
+     </span><span class="subtext">${dict[key][3]['category']}</span></td>`;
       c5.innerHTML = `
-      <button class="btn-detail" type="button">See Details</button>`
+      <button class="btn-detail btn-table-style" type="button">See Details</button>`
       c6.innerHTML = `
-      <button class="btn-item-add" id="btn-item-add" type="button">Add</button>`
+      <button class="btn-item-add btn-table-style" id="btn-item-add" type="button">Add</button>`
     }
     
+    const rowClick = document.getElementsByClassName('clickable');
+    for (let i = 0; i < rowClick.length; i++) {
+        rowClick[i].addEventListener('click', showDetails)
+    }
     const detailBtn = document.getElementsByClassName('btn-detail');
     for (let i = 0; i < detailBtn.length; i++) {
-        detailBtn[i].addEventListener('click', detailBtnClick);
+        detailBtn[i].addEventListener('click', showDetails);
 
     }
     
 }
 
-function detailBtnClick(event) {
+function showDetails(event) {
     const btn = event.target;
-    
+
     // fetching the 'food label' value
     const tr = btn.closest('tr');
     const key = tr.getElementsByClassName('key')[0].innerText;
+    console.log(key)
 
     const chartDoughnut = document.getElementById('myChart');
     
-    console.log(chartDoughnut);
     
     // chartjs plugins
     const doughnutCentreText = {
@@ -127,6 +130,9 @@ function detailBtnClick(event) {
 
         }
     } 
+
+    //sliceThickness plugin chartjs
+
     
     // creating the chart
     const chart = new Chart(chartDoughnut, {
@@ -150,7 +156,7 @@ function detailBtnClick(event) {
                 
         },
         options: {
-            borderWidth: 12,
+            borderWidth: 5,
             borderRadius: 2,
             hoverBorderWidth: 0,
             plugins: {
@@ -162,7 +168,7 @@ function detailBtnClick(event) {
             plugins: [doughnutCentreText]
         
     });
-
+    console.log(chart)
     // calculate nutrition% of total 
     const totalGrams = globalDict[key][0]['PROCNT'] + globalDict[key][0]['CHOCDF'] + globalDict[key][0]['FAT']
     const proteinPercent = parseFloat((globalDict[key][0]['PROCNT'] / totalGrams) * 100).toFixed(1);

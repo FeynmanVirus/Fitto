@@ -4,6 +4,7 @@
     --primary: #282A3A;
     --secondary: #301E67;
     --accent: #372279;
+    --cool: #4a41d8;
 }
 
 body {
@@ -349,3 +350,4 @@ table.bootstrap4_dark a {
   .btn-table-style:active, .btn-addFood:active, #calculate-btn:active {
     top: 2px;
   }
+  

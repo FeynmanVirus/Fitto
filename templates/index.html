@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitto </title>
     <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/index.css">
+    <script src="https://kit.fontawesome.com/156d77620b.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script defer src="/static/index.js"></script>
 </head>
 <body>
@@ -20,8 +23,69 @@
                 <a href="/activity">activity-tracker</a>
             </li>
         </ul>
-    </nav>
+    </nav>  
+    <div class="container">
+        <div class="rectangle-parent">
+            
+            <div class="frame-item"></div>
+            <div class="your-progress">Your Progress</div>
+            <div class="frame-inner"></div>
+            <div class="avg-calories">Avg Calories</div>
+            <b class="kcal">3100Kcal</b>
+            <img class="vector-icon" alt="" src="/public/bowl-rice-solid.svg" />
+            
+      
+            <div class="rectangle-div"></div>
+            <div class="avg-carbs">Avg Carbs</div>
+            <div class="avg-fat">Avg Fat</div>
+            <div class="avg-protein">Avg Protein</div>
+            <div class="avg-fiber">Avg Fiber</div>
+            <div class="gm">120gm</div>
+            <div class="gm1">120gm</div>
+            <div class="gm2">110gm</div>
+            <div class="gm3">120gm</div>
+            <img class="vector-icon1" alt="" src="/public/cubes-stacked-solid.svg" />
+      
+            <img class="vector-icon2" alt="" src="/public/shrimp-solid.svg" />
+      
+            <img class="vector-icon3" alt="" src="/public/wheat-awn-solid.svg" />
+      
+            <img class="vector-icon4" alt="" src="/public/jar-solid.svg" />
+      
+            <div class="frame-child1"></div>
+            <div class="frame-child2">
+                <canvas id="progressChart"></canvas>
+            </div>
+            <div class="frame-child3"></div>
+            <div class="breakfast">Breakfast</div>
+            <div class="dinner">Dinner</div>
+            <div class="lunch">Lunch</div>
+            <img class="group-icon" alt="" src="/public/breakfast-svgrepo-com.svg" /> 
+            <img class="group-icon1" alt="" src="/public/lunch-svgrepo-com.svg" /> 
+            <img class="group-icon2" alt="" src="/public/dinner-svgrepo-com.svg" /> 
+      
 
-    
+          </div>
+        <div class="summary-container">
+            <div class="calorie-summary">
+                <div id="chartContainer">
+                    <div id="calorieChartDiv">
+                        <canvas id="calorieChart"></canvas>
+                    </div>
+                    <div id="calorieBurnedChartDiv">
+                        <canvas id="calorieBurnedChart"></canvas>
+                    </div>
+                    <div id="calorieRemainingChartDiv">
+                        <canvas id="calorieRemainingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="macronutrients-summary">
+                <div id="macroBarChartDiv">
+                    <canvas id="macroBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>    
 </body>
 </html>
