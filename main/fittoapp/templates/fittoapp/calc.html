@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,18 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitto - calc</title>
     
-    <link rel="stylesheet" href="/static/styles-calc.css"> 
+    <link rel="stylesheet" href="{% static 'fittoapp/styles-calc.css'%}"> 
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script defer src="/static/calculate.js"></script>
+    <script defer src="{% static 'fittoapp/calculate.js'%}"></script>
 </head>
 <body>
     <nav>
         <ul>
             <li>
-                <a href="index.html" aria-current="page">home</a>
+                <a href="{% url 'fittoapp:index' %}" aria-current="page">home</a>
             </li>
             <li>
-                <a href="calc.html">calorie-calculator</a>
+                <a href="{% url 'fittoapp:calculate' %}">calorie-calculator</a>
             </li>
             <li>
                 <a href="#">activity-tracker</a>

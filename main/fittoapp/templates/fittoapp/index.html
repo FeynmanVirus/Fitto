@@ -1,23 +1,25 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitto </title>
-    <link rel="stylesheet" href="/static/styles.css">
-    <link rel="stylesheet" href="/static/index.css">
+    <link rel="stylesheet" href="{% static 'fittoapp/styles.css'%}">
+    <link rel="stylesheet" href="{% static 'fittoapp/index.css'%}">
     <script src="https://kit.fontawesome.com/156d77620b.js" crossorigin="anonymous"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script defer src="/static/index.js"></script>
+    <script defer src="{% static 'fittoapp/index.js'%}"></script>
 </head>
 <body>
     <nav>
         <ul>
             <li>
-                <a href="index.html" aria-current="page">home</a>
+                <a href="{% url 'fittoapp:index' %}" aria-current="page">home</a>
             </li>
             <li>
-                <a href="calc.html">calorie-calculator</a>
+                <a href="{% url 'fittoapp:calculate' %}">calorie-calculator</a>
             </li>
             <li>
                 <a href="/activity">activity-tracker</a>
@@ -31,8 +33,8 @@
             <div class="your-progress">Your Progress</div>
             <div class="frame-inner"></div>
             <div class="avg-calories">Avg Calories</div>
-            <b class="kcal">3100Kcal</b>
-            <img class="vector-icon" alt="" src="/public/bowl-rice-solid.svg" />
+            <b class="kcal"></b>
+            <img class="vector-icon" alt="" src="{% static 'fittoapp/public/bowl-rice-solid.svg' %}" />
             
       
             <div class="rectangle-div"></div>
@@ -40,17 +42,17 @@
             <div class="avg-fat">Avg Fat</div>
             <div class="avg-protein">Avg Protein</div>
             <div class="avg-fiber">Avg Fiber</div>
-            <div class="gm">120gm</div>
-            <div class="gm1">120gm</div>
-            <div class="gm2">110gm</div>
-            <div class="gm3">120gm</div>
-            <img class="vector-icon1" alt="" src="/public/cubes-stacked-solid.svg" />
+            <div class="gm"></div>
+            <div class="gm1"></div>
+            <div class="gm2"></div>
+            <div class="gm3"></div>
+            <img class="vector-icon1" alt="" src="{% static 'fittoapp/public/cubes-stacked-solid.svg' %}" />
       
-            <img class="vector-icon2" alt="" src="/public/shrimp-solid.svg" />
+            <img class="vector-icon2" alt="" src="{% static 'fittoapp/public/shrimp-solid.svg' %}" />
       
-            <img class="vector-icon3" alt="" src="/public/wheat-awn-solid.svg" />
+            <img class="vector-icon3" alt="" src="{% static 'fittoapp/public/wheat-awn-solid.svg' %}" />
       
-            <img class="vector-icon4" alt="" src="/public/jar-solid.svg" />
+            <img class="vector-icon4" alt="" src="{% static 'fittoapp/public/jar-solid.svg' %}" />
       
             <div class="frame-child1"></div>
             <div class="frame-child2">
@@ -60,9 +62,9 @@
             <div class="breakfast">Breakfast</div>
             <div class="dinner">Dinner</div>
             <div class="lunch">Lunch</div>
-            <img class="group-icon" alt="" src="/public/breakfast-svgrepo-com.svg" /> 
-            <img class="group-icon1" alt="" src="/public/lunch-svgrepo-com.svg" /> 
-            <img class="group-icon2" alt="" src="/public/dinner-svgrepo-com.svg" /> 
+            <img class="group-icon" alt="" src="{% static 'fittoapp/public/breakfast-svgrepo-com.svg' %}" /> 
+            <img class="group-icon1" alt="" src="{% static 'fittoapp/public/lunch-svgrepo-com.svg' %}" /> 
+            <img class="group-icon2" alt="" src="{% static 'fittoapp/public/dinner-svgrepo-com.svg' %}" /> 
       
 
           </div>
