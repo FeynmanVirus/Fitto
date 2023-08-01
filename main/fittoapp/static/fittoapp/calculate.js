@@ -1,4 +1,3 @@
-
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', ready);
 } else {
@@ -7,7 +6,6 @@ if (document.readyState == 'loading') {
 
 function ready() {
     const calculateBtn = document.getElementById('calculate-btn');
-    console.log('works')
 
     calculateBtn.addEventListener('click', calculate);
 
@@ -196,7 +194,7 @@ function showDetails(event) {
     modal.showModal();
     const closeButton = document.getElementById('closeButton');
 
-    const addBtn = document.getElementById('btn-dialogAddFood');
+    const addBtn = document.getElementById('btn-item-add');
     addBtn.addEventListener('click', sessionDiaryFunc(key))
     closeButton.addEventListener('click', (e) => {
         modal.close();
@@ -217,9 +215,29 @@ function showDetails(event) {
     
 }
 
+
+
+
+
 function sessionDiaryFunc(key) {
+
     sessionDiary.push(globalDict[key][0])
-    return sessionDiary;
+
+    console.log(csrftoken)
+
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            console.log(this.responseText)
+        }
+    }
+
+    xhr.open("POST", 'send')
+    xhr.setRequestHeader("X-CSRFToken", csrftoken)
+    xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
+    xhr.send(JSON.stringify(globalDict[key][0]))
+
 }
 
 
