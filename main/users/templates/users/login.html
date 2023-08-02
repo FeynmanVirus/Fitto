@@ -1,0 +1,27 @@
+{% extends 'fittoapp/layout.html' %}
+{% load static %}
+
+{% block title %} - register {% endblock %}
+{% block link %} 
+<link rel="stylesheet" href="{% static 'fittoapp/index.css'%}">
+{% endblock%}
+
+{% block body %}      
+
+
+
+<!--Register--> 
+<div class="container">
+	<h1>Login</h1>
+	<form method="POST">
+		{% csrf_token %}   
+        {{ form.as_p }}   
+        {% comment %} <input type="text" name="username" placeholder="Username">
+        <input type="password" name="password1" placeholder="Password">
+        <input type="password" name="password2" placeholder="Confirm Password">       {% endcomment %}
+		<button class="btn btn-primary" type="submit">Login</button>
+	</form>
+	<p class="text-center">Don't have an account?<a href="{% url 'register' %}">Register</a> instead.</p>
+</div>
+
+{% endblock %}
