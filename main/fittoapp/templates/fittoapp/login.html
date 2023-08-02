@@ -1,0 +1,16 @@
+{% extends 'fittoapp/layout.html' %}
+{% load static %}
+
+{% block title %} - Login {% endblock %}
+{% block link %} {% endblock %}
+
+{% block body %}
+    <div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        {{login_form }}
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+    <p class="text-center">Don't have an account? <a href="{% url 'fittoapp:register' %}">Create an account</a>.</p>
+    </div>
+{% endblock %}

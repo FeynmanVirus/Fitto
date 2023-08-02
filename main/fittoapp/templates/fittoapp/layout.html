@@ -1,28 +1,47 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fitto {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="/static/styles.css">
-    {% block style %}{% endblock %}
-    <script defer src="/static/index.js"></script>
+    <link rel="stylesheet" href="{% static 'fittoapp/styles.css' %}">
+    
+    {% block link %} {% endblock %}
 </head>
 <body>
     <nav>
+        
         <ul>
+            {% if user.is_authenticated %}
             <li>
-                <a href="/" aria-current="page">home</a>
+                <a href="{% url 'fittoapp:index' %}" aria-current="page">home</a>
             </li>
             <li>
-                <a href="/calorie">calorie-calculator</a>
+                <a href="{% url 'fittoapp:calculate' %}">calorie-calculator</a>
             </li>
             <li>
                 <a href="/activity">activity-tracker</a>
             </li>
+            <li>
+                <a href="{% url 'fittoapp:logout' %}">Logout</a>
+            </li>
         </ul>
+            {% else %}
+        <ul>
+            <li>
+                <a href="{% url 'fittoapp:register' %}" aria-current="page">Register</a>
+            </li>
+            <li>
+                <a href="{% url 'fittoapp:login' %}" aria-current="page">Login</a>
+            </li>
+        </ul>
+            {% endif %}
     </nav>
 
-    {% block main %}{% endblock %}
+    {% block body %}
+
+    {% endblock %}
 </body>
 </html>
