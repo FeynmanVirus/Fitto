@@ -25,21 +25,27 @@
                 <a href="/activity">activity-tracker</a>
             </li>
             <li>
-                <a href="{% url 'fittoapp:logout' %}">Logout</a>
+                <a href="{% url 'logout' %}">Logout</a>
             </li>
         </ul>
             {% else %}
         <ul>
             <li>
-                <a href="{% url 'fittoapp:register' %}" aria-current="page">Register</a>
+                <a href="{% url 'register' %}" aria-current="page">Register</a>
             </li>
             <li>
-                <a href="{% url 'fittoapp:login' %}" aria-current="page">Login</a>
+                <a href="{% url 'login' %}" aria-current="page">Login</a>
             </li>
         </ul>
             {% endif %}
     </nav>
-
+    {% if messages %}
+     {% for message in messages %}
+        <div class='django-messages'>
+            {{ message }}
+        </div>
+     {% endfor %}
+    {% endif %}
     {% block body %}
 
     {% endblock %}
