@@ -4,8 +4,6 @@ if (document.readyState == 'loading') {
     ready();
 }
 
-const nice = 'nice';
-
 function ready() {
     const calorieSummary = document.getElementsByClassName('calorie-summary')
     createCalorieChart();
@@ -13,6 +11,7 @@ function ready() {
     createCalorieRemainingChart();
     createProgressChart()
     createProgressBars();
+    console.log(food_data)
 }
 
 function createCalorieChart() {
@@ -31,7 +30,7 @@ function createCalorieChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText("kcal", xCoor, yCoor); 
+            ctx.fillText(food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -46,7 +45,7 @@ function createCalorieChart() {
               ],
             datasets: [{
                 label: 'Nutritional value: ',
-                data: [20, 30, 40],
+                data: [food_data[0]['fields'].protein, food_data[0]['fields'].fat, food_data[0]['fields'].carbs],
                 backgroundColor: [
                 'rgb(255, 99, 132)',
                 'rgb(54, 162, 235)',
@@ -97,17 +96,15 @@ function createCalorieBurnedChart() {
         type: 'doughnut',
         data: {
             labels: [
-                'Protein',
-                'Fat',
-                'Carbohydrate'
+                'Burned',
+                'BMR',
               ],
             datasets: [{
                 label: 'Nutritional value: ',
-                data: [10, 80, 20],
+                data: [10, 80],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
-                    'rgb(255, 159, 64)',
-                    'rgb(255, 205, 86)'
+                    'rgb(255, 159, 64)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -156,10 +153,10 @@ function createCalorieRemainingChart() {
 
 
     const data = {
-        labels: ['Remaining'],
+        labels: ['Consumed', 'Remaining'],
         datasets: [{
-            label: 'Remaining',
-            data: ['50', '200'],
+            label: 'Consumed, Remaining',
+            data: [food_data[0]['fields'].energy, 2000 - food_data[0]['fields'].energy],
             backgroundColor: [
                 '#f6eded',
                 '#9da0ad'
@@ -199,8 +196,8 @@ function createProgressBars() {
     const data   = {
         labels: ['Energy', 'Protein', 'Carbs', 'Fat'],
         datasets: [{
-          label: 'Weekly Sales',
-          data: [4, 12, 6, 9],
+          label: 'Macro nutrients',
+          data: [food_data[0]['fields'].energy, food_data[0]['fields'].protein, food_data[0]['fields'].carbs, food_data[0]['fields'].fat],
           borderColor: [
             'rgba(255, 26, 104, 0.2)',
             'rgba(54, 162, 235, 0.2)',
@@ -282,7 +279,7 @@ function createProgressBars() {
             },
             scales: {
               x: {
-                  beginAtZero: true,
+                  beginAtZero: true,  
                   grid: {
                     display: false,
                     drawBorder: false

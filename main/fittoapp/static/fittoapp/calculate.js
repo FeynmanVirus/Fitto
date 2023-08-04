@@ -233,7 +233,7 @@ function sessionDiaryFunc(key) {
         }
     }
 
-    xhr.open("POST", 'send')
+    xhr.open("POST", 'foodentry')
     xhr.setRequestHeader("X-CSRFToken", csrftoken)
     xhr.setRequestHeader("Content-Type", "text/plain;charset=UTF-8");
     xhr.send(JSON.stringify(globalDict[key][0]))

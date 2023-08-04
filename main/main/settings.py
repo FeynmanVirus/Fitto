@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-tr@j2pz2zs8ra5dri6mk$qwglci4z4%-8z=-8rm8=*hco6)-eq'
+SECRET_KEY = 'django-insecure-r*exbi$q^k43+w%beuwyl&kg5#cra+psaw0jo5cemx2lq3i7g+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,8 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'fittoapp',
-    'users',
+    'fittoapp.apps.FittoappConfig',
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -125,5 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = "users.User"
 
 LOGIN_REDIRECT_URL = 'fittoapp:index'

@@ -21,8 +21,8 @@ from users import views as users_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('register/', users_views.register_request, name="register"),
     path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name="login"),
     path('logout/', users_views.logout_request, name="logout"),
-    path('register/', users_views.register_request, name='register'),
-    path("", include('fittoapp.urls')),
+    path("", include('fittoapp.urls'))
 ]

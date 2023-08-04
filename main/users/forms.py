@@ -1,22 +1,16 @@
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
-class NewUserForm(UserCreationForm):
-    age = forms.IntegerField()
-    weight = forms.IntegerField()
-    height = forms.IntegerField()
+from users.models import User 
+
+class CustomUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", 'age', 'weight', 'height', "password1", "password2")
-
-    def save(self, commit=True):
-        user = super(NewUserForm, self).save(commit=False)
-        user.age = self.cleaned_data['age']
-        user.weight = self.cleaned_data['weight']
-        user.height = self.cleaned_data['height']
+        fields = ("email", "age", "height", "weight")
         
-        if commit: 
-            user.save()
-        return user
+
+class CustomUserChangeForm(UserChangeForm):
+
+    class Meta:
+        model = User
+        fields = ("email", "age", "height", "weight")
