@@ -15,6 +15,7 @@ body {
     background-color: var(--background);
     font-family: "Open Sans", sans-serif;
     color: var(--text);
+    overflow: hidden;
 }
 
 
@@ -178,24 +179,204 @@ nav a {
     width: 30vw;
     /* max-width: 500px;
     min-width: 150px; */
+    box-sizing: border-box;
     height: 20vw;
     margin: auto;
+    padding-top: 35px;
     margin-left: -25px;
     
 }
 
-#macroBarChartDiv {
-    width: 25vw;
-    height: 230px;
-    margin: 80px auto;
+.macronutrients-summary #macroBarChartDiv {
+    width: 100%;
+    margin: 30px 0;
+    margin-left: 12px;
 }
 
-.macronutrients-name {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
+#macroBarChartDiv .macro-progress-name {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffe;
+
 }
 
-.macronutrients-name span {
+#energynumbers {
+    position: absolute;
     
+    left: 300px;
+    top: -30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--cool);
+    z-index: 1;
 }
+
+#proteinnumbers {
+    position: absolute;
+    left: 300px;
+    top: -30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--cool);
+    z-index: 1;
+}
+
+#carbsnumbers {
+    position: absolute;
+    left: 300px;
+    top: -30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--cool);
+    z-index: 1;
+}
+
+#fatnumbers {
+    position: absolute;
+    left: 300px;
+    top: -30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--cool);
+    z-index: 1;
+}
+
+#energynumbers::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 12px;
+    width: 12px;
+    bottom: -2px;
+    z-index: -1;
+    background-color: var(--cool);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+#proteinnumbers::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 12px;
+    width: 12px;
+    bottom: -2px;
+    z-index: -1;
+    background-color: var(--cool);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+#carbsnumbers::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 12px;
+    width: 12px;
+    bottom: -2px;
+    z-index: -1;
+    background-color: var(--cool);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+#fatnumbers::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 12px;
+    width: 12px;
+    bottom: -2px;
+    z-index: -1;
+    background-color: var(--cool);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+.tooltip {
+    overflow:hidden;
+    position: absolute;
+    left: 470px;
+    top: -30px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    padding: 2px 6px;
+    border-radius: 3px;
+    background: var(--cool);
+    z-index: 1;
+}
+
+.tooltip::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    height: 12px;
+    width: 12px;
+    bottom: -2px;
+    z-index: -1;
+    background-color: var(--cool);
+    transform: translateX(-50%) rotate(45deg);
+}
+
+
+
+
+#macroBarChartDiv .progressbar {
+    height: 8px;
+    width: 90%;
+    background: #fff;
+    margin-top: 6px;
+    border-radius: 6px;
+}
+
+.progressbar .macro-per {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 90%;
+    border-radius: 6px;
+    
+    animation: progress 0.5s ease-in-out forwards;
+}
+
+@keyframes progress {
+    0% {
+        width: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+
+
+#energyprogress { 
+    width: 90%; 
+    background-color: rgb(255, 99, 132);
+}
+
+#proteinprogress { 
+    width: 40%; 
+    background-color: rgb(255, 159, 64);
+}
+
+#carbsprogress {
+    width: 90%; 
+    background-color: rgb(54, 162, 235);
+}
+
+#fatprogress { 
+    width: 80%; 
+    background-color: rgb(153, 102, 255);
+}
+

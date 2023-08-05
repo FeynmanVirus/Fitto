@@ -6,12 +6,96 @@ if (document.readyState == 'loading') {
 
 function ready() {
     const calorieSummary = document.getElementsByClassName('calorie-summary')
-    createCalorieChart();
+    food_data[0]['fields'].energy > 0 ? createCalorieChart() : createEmptyCalorieChart()
     createCalorieBurnedChart();
     createCalorieRemainingChart();
-    createProgressChart()
-    createProgressBars();
+    createProgressChart();
+    // createProgressBars();
+    progressBarFill();
     console.log(food_data)
+    console.log(food_data[0]['fields'].energy)
+}
+
+function progressBarFill() {
+    // bar for width
+    energyBar = document.getElementById('energyprogress')
+    proteinBar = document.getElementById('proteinprogress')
+    carbsBar = document.getElementById('carbsprogress')
+    fatBar = document.getElementById('fatprogress')
+
+    // % of total 
+    energy = (food_data[0]['fields'].energy / 2000) * 100;
+    protein = (food_data[0]['fields'].protein / 150) * 100;
+    carbs = (food_data[0]['fields'].carbs / 200) * 100;
+    fat = (food_data[0]['fields'].fat / 110) * 100;
+
+    energyBar.style.width = energy <= 100 ? `${energy}%` : '100%'
+    proteinBar.style.width = protein <= 100 ? `${protein}%` : '100%'
+    carbsBar.style.width = carbs <= 100 ? `${carbs}%` : '100%'
+    fatBar.style.width = fat <= 100 ? `${fat}%` : '100%'
+
+    document.getElementById('energytooltip').innerText = `${energy.toFixed(0)}%` || 
+    console.log(document.getElementById('energytooltip').innerText)
+    document.getElementById('proteintooltip').innerText = `${protein.toFixed(0)}%` || '0%'
+    document.getElementById('carbstooltip').innerText = `${carbs.toFixed(0)}%` || '0%'
+    document.getElementById('fattooltip').innerText = `${fat.toFixed(0)}%` || '0%'
+
+    document.getElementById('energynumbers').innerText = `${food_data[0]['fields'].energy}/2000Kcal` || `0/200Kcal`
+    document.getElementById('proteinnumbers').innerText = `${food_data[0]['fields'].protein}/150g` || `0/150g`
+    document.getElementById('carbsnumbers').innerText = `${food_data[0]['fields'].carbs}/200g` || `0/200g`
+    document.getElementById('fatnumbers').innerText = `${food_data[0]['fields'].fat}/110g` || `0/110g`
+}
+
+function createEmptyCalorieChart() {
+    const calorieDoughnutChart = document.getElementById('calorieChart');
+
+    const doughnutCentreText = {
+        id: 'doughnutCentreText',
+        beforeDatasetsDraw(chart, args, pluginOptions) {
+            const { ctx, data } = chart; 
+            ctx.save
+
+            const xCoor = chart.getDatasetMeta(0).data[0].x;
+            const yCoor = chart.getDatasetMeta(0).data[0].y;
+            ctx.font = 'bold 15px sans-serif';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center'; 
+            ctx.textBaseline = 'middle';
+            ctx.fillText(food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
+
+        }
+    }
+
+    const chart = new Chart(calorieDoughnutChart, {
+        type: 'doughnut',
+        data: {
+            labels: [
+                '0KCAL',
+              ],
+            datasets: [{
+                label: 'Nutritional value: 0',
+                data: ['100'],
+                backgroundColor: [
+                '#9da0ad'
+                ],
+                hoverOffset: 4
+                }]
+                
+        },
+        options: {
+            borderWidth: 0,
+            borderRadius: 2,
+            hoverBorderWidth: 0,
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            },
+            cutout: 50,
+            },
+            plugins: [doughnutCentreText],
+        
+    });
 }
 
 function createCalorieChart() {
@@ -87,7 +171,7 @@ function createCalorieBurnedChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText("kcal", xCoor, yCoor); 
+            ctx.fillText(food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -146,7 +230,7 @@ function createCalorieRemainingChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText("kcal", xCoor, yCoor); 
+            ctx.fillText(2000 - food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -191,33 +275,62 @@ function createCalorieRemainingChart() {
 function createProgressBars() {
     const progressBar = document.getElementById('macroBarChart');
 
-    
-
     const data   = {
         labels: ['Energy', 'Protein', 'Carbs', 'Fat'],
         datasets: [{
-          label: 'Macro nutrients',
-          data: [food_data[0]['fields'].energy, food_data[0]['fields'].protein, food_data[0]['fields'].carbs, food_data[0]['fields'].fat],
+          label: 'Energy',
+          data: [food_data[0]['fields'].energy],
           borderColor: [
-            'rgba(255, 26, 104, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)'
+            'rgba(255, 26, 104, 0.2)'
           ],
           backgroundColor: [
-            'rgba(255, 26, 104, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)'
+            'rgba(255, 26, 104, 1)'
           ],
           borderWidth: 0.1,
           barPercentage: 0.3,
           borderSkipped: false,
           borderRadius: 10,
           categoryPercentage: 0.6
-        }]
+        },
+        {
+            label: 'Protein',
+            data: [food_data[0]['fields'].protein],
+            borderColor: ['rgba(54, 162, 235, 0.2)'],
+            backgroundColor: ['rgba(54, 162, 235, 1)'],
+            borderWidth: 0.1,
+            barPercentage: 0.3,
+            borderSkipped: false,
+            borderRadius: 10,
+            categoryPercentage: 1
+        },
+        {
+            label: 'Carbs',
+            data: [food_data[0]['fields'].carbs],
+            borderColor: ['rgba(255, 206, 86, 0.2)'],
+            backgroundColor: ['rgba(255, 206, 86, 1)'],
+            borderWidth: 0.1,
+            barPercentage: 0.3,
+            borderSkipped: false,
+            borderRadius: 10,
+            categoryPercentage: 1
+        },
+        {
+            label: 'Fat',
+            data: [food_data[0]['fields'].fat],
+            borderColor: ['rgba(75, 192, 192, 0.2)'],
+            backgroundColor: ['rgba(75, 192, 192, 1)'],
+            borderWidth: 0.1,
+                barPercentage: 0.3,
+                borderSkipped: false,
+                borderRadius: 10,
+                categoryPercentage: 1
+        }   
+
+    ]
       };
 
+      
+      
       //progress bar plugin
       const progressBarPlugin = {
         id: 'progressBarPlugin',
@@ -226,29 +339,33 @@ function createProgressBars() {
             scales: {x, y} } = chart;   
 
             ctx.save();
-
+            
             //setting labels of macro nutrients
-            data.datasets[0].data.forEach((datapoint, index) => {
-                const fontSizeLabel = 12;
-                ctx.font = `16px sans-serif`;
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'left';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(data.labels[index], left, y.getPixelForValue(index) - fontSizeLabel - 5);
-
-
-                // value text 
-                const fontSizeDatapoint = 12;
-                ctx.font = `bolder ${fontSizeDatapoint} sans-serif`;
-                ctx.fillStyle = 'white';
-                ctx.textAlign = 'right';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(datapoint, right - 5, y.getPixelForValue(index) - fontSizeDatapoint - 5);
-
-            })
+            for (let i = 0; i < data.datasets.length; i++ ){
+                data.datasets[i].data.forEach((datapoint, index) => {
+                    const fontSizeLabel = 12;
+                    ctx.font = `16px sans-serif`;
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(data.labels[index], left, y.getPixelForValue(index) - fontSizeLabel - 5);
+    
+    
+                    // value text 
+                    const fontSizeDatapoint = 12;
+                    ctx.font = `bolder ${fontSizeDatapoint} sans-serif`;
+                    ctx.fillStyle = 'white';
+                    ctx.textAlign = 'right';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(datapoint, right - 5, y.getPixelForValue(index) - fontSizeDatapoint - 5);
+    
+                })
+            }
+            
 
 
             // //bg color of progress bar
+            
             chart.getDatasetMeta(0).data.forEach((datapoint, index) => {
                 // shape
                 const barHeight =height / data.labels.length * data.datasets[0].barPercentage * data.datasets[0].
