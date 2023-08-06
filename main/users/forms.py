@@ -6,11 +6,11 @@ class CustomUserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("email", "age", "height", "weight")
+        fields = ("email", "age", "height", "weight", "sex", "goal", "activity")
         
 
 class CustomUserChangeForm(UserChangeForm):
 
     class Meta:
         model = User
-        fields = ("email", "age", "height", "weight")
+        fields = ("email", "age", "height", "weight", "sex", "goal", "activity")

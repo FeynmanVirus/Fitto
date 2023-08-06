@@ -108,6 +108,17 @@ async function createTable(dict) {
     const addBtn = await document.getElementsByClassName('btn-item-add');
     for (let i = 0; i < addBtn.length; i++) {
         addBtn[i].addEventListener('click', function() {
+        
+            const tr = addBtn[i].closest('tr')
+            const key = tr.getElementsByClassName('key')[0].innerText
+            console.log(key)
+            diaryData = {
+                'Energy': globalDict[0][key][0]['ENERC_KCAL'].toFixed(2),
+                'Protein': globalDict[0][key][0]['PROCNT'].toFixed(2),
+                'Carbs': globalDict[0][key][0]['CHOCDF'].toFixed(2),
+                'Fat': globalDict[0][key][0]['FAT'].toFixed(2),
+                'Fiber': globalDict[0][key][0]['FIBTG'].toFixed(2),
+            }
             sessionDiaryFunc(diaryData)
         })
     }

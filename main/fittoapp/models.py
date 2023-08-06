@@ -18,3 +18,11 @@ class FoodDiary(models.Model):
         return f"{self.user} ate {self.energy}kcal, protein: {self.protein}, carbs: {self.carbs}, fat: {self.fat}, fiber: {self.fiber} on {self.date}"
 
     
+class UserBodyReq(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user", related_name="bodyreq")
+    bmr = models.IntegerField(null=True)
+    daily_intake = models.IntegerField(null=True)
+
+    def __str__(self):
+        return f"{self.user} has a BMR of {self.bmr} and daily intake of {self.daily_intake} kcal"
+    
