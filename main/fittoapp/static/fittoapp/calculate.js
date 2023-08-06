@@ -13,7 +13,19 @@ function ready() {
 
 var globalDict = {};
 var diaryData = {};
-var sessionDiary = [];
+
+let totalGrams = 0;
+let proteinPercent = 0;  
+let carbsPercent = 0;
+let fatPercent = 0;
+
+let proteinAmt = 0;
+let carbsAmt = 0;
+let fatAmt = 0;
+
+let percProtein = 0;
+let percCarbs = 0;
+let percFat = 0;
 
 async function calculate(event) {
     const calculateBtn = event.target;
@@ -22,7 +34,6 @@ async function calculate(event) {
 
     const dict = await fetchApi(api_url);
     createTable(dict[0]);
-    console.log(dict)
     globalDict = dict;
 }
 
@@ -53,9 +64,7 @@ async function fetchApi(url) {
             let weight = measures[i].weight;
             let label = food.label;
             let nutrients = food.nutrients;
-            let category = food.category;
-            console.log(weight)
-             
+            let category = food.category;             
 
             dict[label] = [nutrients, {'measures': servingType}, {'weight': weight}, {'category': category}];
             servings[servingType] = weight;
@@ -64,13 +73,11 @@ async function fetchApi(url) {
         }
         i++;
     }
-    console.log(dict);
-    console.log(servings)
     return [dict, servings];
 }
 
 
-function createTable(dict) {
+async function createTable(dict) {
     const table = document.getElementsByClassName('boostrap4_dark')[0];
     table.innerHTML = "";
     
@@ -82,8 +89,7 @@ function createTable(dict) {
       let c1 = row.insertCell(0);
       let c5 = row.insertCell(1);
       let c6 = row.insertCell(2 );
-      row.setAttribute('class', 'clickable');
-
+      
     //   Add data to c1 and c2
       c1.innerHTML = `<td><span class="key">${key}</span> <span class="subtext">${dict[key][0]['ENERC_KCAL'].toFixed(0)} kcal</span>
       <span class="subtext">1 Serving</span> 
@@ -92,14 +98,19 @@ function createTable(dict) {
       c5.innerHTML = `
       <button class="btn-detail btn-table-style" type="button">See Details</button>`
       c6.innerHTML = `
-      <button class="btn-item-add btn-table-style" id="btn-item-add" type="button">Add</button>`
+      <button class="btn-item-add btn-table-style" type="button">Quick Add</button>`
     }
     
     const detailBtn = document.getElementsByClassName('btn-detail');
     for (let i = 0; i < detailBtn.length; i++) {
         detailBtn[i].addEventListener('click', showDetails);
     }
-    
+    const addBtn = await document.getElementsByClassName('btn-item-add');
+    for (let i = 0; i < addBtn.length; i++) {
+        addBtn[i].addEventListener('click', function() {
+            sessionDiaryFunc(diaryData)
+        })
+    }
 }
 
 function showDetails(event) {
@@ -125,33 +136,6 @@ function showDetails(event) {
     let servingSizeNumber = 1;
     let selectedWeight = 100
     
-    selectDropdown.addEventListener('change', () => {
-        selectedOption = selectDropdown.value.split("- ");
-        selectedWeight = parseInt(selectedOption[1])
-        console.log(selectedWeight)
-        diaryData['Energy'] = ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Protein'] = ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Carbs'] = ((globalDict[0][key][0]['CHOCDF'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Fat'] = ((globalDict[0][key][0]['FAT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Fiber'] = ((globalDict[0][key][0]['FIBTG'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        chart.data.datasets[0].data = [diaryData['Protein'], diaryData['Carbs'], diaryData['Fat']]
-        console.log(chart.data.datasets[0].data)
-        console.log(diaryData)
-    })
-
-    servingSizeBox.addEventListener('change', () => {
-        servingSizeNumber = servingSizeBox.value
-        console.log(servingSizeBox.value)
-        diaryData['Energy'] = ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Protein'] = ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Carbs'] = ((globalDict[0][key][0]['CHOCDF'] / 100) * selectedWeight * servingSizeNumber).toFixed(2) 
-        diaryData['Fat'] = ((globalDict[0][key][0]['FAT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        diaryData['Fiber'] = ((globalDict[0][key][0]['FIBTG'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
-        console.log(diaryData)
-    })
-
-    
-    
     diaryData = {
        'Energy': ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
        'Protein': ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
@@ -164,7 +148,7 @@ function showDetails(event) {
     // chartjs plugins
     const doughnutCentreText = {
         id: 'doughnutCentreText',
-        beforeDatasetsDraw(chart, args, pluginOptions) {
+        beforeDatasetDraw(chart, args, pluginOptions) {
             const { ctx, data } = chart; 
             ctx.save
 
@@ -178,9 +162,11 @@ function showDetails(event) {
 
         }
     } 
-    console.log(diaryData['Protein'], diaryData['Carbs'], diaryData['Fat'])
+
+    
+    
     // creating the chart
-    const chart = new Chart(chartDoughnut, {
+    const progressChart = new Chart(chartDoughnut, {
         type: 'doughnut',
         data: {
             labels: [
@@ -213,39 +199,74 @@ function showDetails(event) {
             plugins: [doughnutCentreText]
         
     });
+    console.log(progressChart)
     
     // calculate nutrition% of total 
-    const totalGrams = globalDict[0][key][0]['PROCNT'] + globalDict[0][key][0]['CHOCDF'] + globalDict[0][key][0]['FAT']
-    const proteinPercent = parseFloat((globalDict[0][key][0]['PROCNT'] / totalGrams) * 100).toFixed(1);
-    const carbsPercent = parseFloat((globalDict[0][key][0]['CHOCDF'] / totalGrams) * 100).toFixed(1);
-    const fatPercent = parseFloat((globalDict[0][key][0]['FAT'] / totalGrams) * 100).toFixed(1);
+    totalGrams = globalDict[0][key][0]['PROCNT'] + globalDict[0][key][0]['CHOCDF'] + globalDict[0][key][0]['FAT']
+    proteinPercent = parseFloat((globalDict[0][key][0]['PROCNT'] / totalGrams) * 100).toFixed(1);
+    carbsPercent = parseFloat((globalDict[0][key][0]['CHOCDF'] / totalGrams) * 100).toFixed(1);
+    fatPercent = parseFloat((globalDict[0][key][0]['FAT'] / totalGrams) * 100).toFixed(1);
 
     // macro-nutrients' amount
-    document.getElementById('proteinAmt').innerText = parseFloat(diaryData['Protein']).toFixed(2) + "g";
-    document.getElementById('carbsAmt').innerText = parseFloat(diaryData['Carbs']).toFixed(2) + "g";
-    document.getElementById('fatAmt').innerText = parseFloat(diaryData['Fat']).toFixed(2) + "g";
+    proteinAmt = document.getElementById('proteinAmt').innerText = parseFloat(diaryData['Protein']).toFixed(2) + "g";
+    carbsAmt = document.getElementById('carbsAmt').innerText = parseFloat(diaryData['Carbs']).toFixed(2) + "g";
+    fatAmt = document.getElementById('fatAmt').innerText = parseFloat(diaryData['Fat']).toFixed(2) + "g";
 
     // percent of total macro-nutrients
-    document.getElementById('percProtein').innerText = proteinPercent + "%";
-    document.getElementById('percCarbs').innerText = carbsPercent + "%"; 
-    document.getElementById('percFat').innerText = fatPercent + "%";
+    percProtein = document.getElementById('percProtein').innerText = proteinPercent + "%";
+    percCarbs = document.getElementById('percCarbs').innerText = carbsPercent + "%"; 
+    percFat = document.getElementById('percFat').innerText = fatPercent + "%";
 
     // food as title of dialog window
     document.getElementById('foodTitleDialog').innerText = key;
 
     // default food serving
     document.getElementById('defaultOption').innerText = "100g";
+
+    // serving size changes
+    selectDropdown.addEventListener('change', () => {
+        selectedOption = selectDropdown.value.split("- ");
+        selectedWeight = parseInt(selectedOption[1])
+  
+        diaryData['Energy'] = ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Protein'] = ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Carbs'] = ((globalDict[0][key][0]['CHOCDF'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Fat'] = ((globalDict[0][key][0]['FAT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Fiber'] = ((globalDict[0][key][0]['FIBTG'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        updateChart(progressChart, diaryData, doughnutCentreText)
+        console.log(progressChart.data.datasets[0].data)
+    })
+
+    servingSizeBox.addEventListener('change', () => {
+        servingSizeNumber = servingSizeBox.value
+  
+        diaryData['Energy'] = ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Protein'] = ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Carbs'] = ((globalDict[0][key][0]['CHOCDF'] / 100) * selectedWeight * servingSizeNumber).toFixed(2) 
+        diaryData['Fat'] = ((globalDict[0][key][0]['FAT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        diaryData['Fiber'] = ((globalDict[0][key][0]['FIBTG'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
+        updateChart(progressChart, diaryData, doughnutCentreText)
+    })
+
+
+
+
     
     //show the modal
     const modal = document.getElementById('modal');
     modal.showModal();
-    const closeButton = document.getElementById('closeButton');
 
-    const addBtn = document.getElementById('btn-item-add');
-    addBtn.addEventListener('click', sessionDiaryFunc(diaryData))
+    // add food button
+    addFoodBtn = document.getElementById('btn-dialogAddFood')
+    addFoodBtn.addEventListener('click', function() {
+        sessionDiaryFunc(diaryData)
+    })
+
+    // close button
+    const closeButton = document.getElementById('closeButton');
     closeButton.addEventListener('click', (e) => {
         modal.close();
-        chart.destroy();
+        progressChart.destroy();
     })
     modal.addEventListener("click", e => {
         const dialogDimensions = modal.getBoundingClientRect()
@@ -256,15 +277,42 @@ function showDetails(event) {
           e.clientY > dialogDimensions.bottom
         ) {
           modal.close();    
-          chart.destroy();
+          progressChart.destroy();
         }
       })
     
 }
 
+function updateChart(chart, diaryData, plugin) {
+    // updating data
+    chart.data.datasets[0].data = [diaryData['Protein'], diaryData['Carbs'], diaryData['Fat']]
+
+    // updating fillText 
+    // const xCoor = chart.getDatasetMeta(0).data[0].x;
+    // const yCoor = chart.getDatasetMeta(0).data[0].y;
+    // plugin.beforeDatasetsDraw.ctx.fillText(diaryData['Energy'] + " kcal", xCoor, yCoor)
+    chart.update()
+
+    totalGrams = parseFloat(diaryData['Protein']) + parseFloat(diaryData['Carbs']) + parseFloat(diaryData['Fat'])
+    proteinPercent = ((parseFloat(diaryData['Protein']) / totalGrams) * 100).toFixed(1);  
+    carbsPercent = ((parseFloat(diaryData['Carbs']) / totalGrams) * 100).toFixed(1);
+    fatPercent = ((parseFloat(diaryData['Fat']) / totalGrams) * 100).toFixed(1);
+
+    proteinAmt = document.getElementById('proteinAmt').innerText = parseFloat(diaryData['Protein']).toFixed(2) + "g";
+    carbsAmt = document.getElementById('carbsAmt').innerText = parseFloat(diaryData['Carbs']).toFixed(2) + "g";
+    fatAmt = document.getElementById('fatAmt').innerText = parseFloat(diaryData['Fat']).toFixed(2) + "g";
+
+    // percent of total macro-nutrients
+    percProtein = document.getElementById('percProtein').innerText = proteinPercent + "%";
+    percCarbs = document.getElementById('percCarbs').innerText = carbsPercent + "%"; 
+    percFat = document.getElementById('percFat').innerText = fatPercent + "%";
+
+}
+
 
 function sessionDiaryFunc(diaryData) {
 
+    console.log('sessiondiaryfunc called')
     console.log(diaryData)
     const xhr = new XMLHttpRequest();
 

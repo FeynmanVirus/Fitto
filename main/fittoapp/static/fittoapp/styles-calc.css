@@ -126,7 +126,7 @@ table.boostrap4_dark td {
 
 tr:hover {
     background-color: #1d1f2c;
-    cursor: pointer;
+    cursor: default;
 }
 
 table.bootstrap4_dark a {
@@ -153,9 +153,9 @@ table.bootstrap4_dark a {
 .modal {
     margin-top: 500px;
     width: 60vw;
-    height: 17vw;
+    height: 14.6vw;
     border-radius: 20px;
-    overflow: hidden;
+    
     /* background-color: var(--primary) */
 }
 
@@ -222,7 +222,7 @@ table.bootstrap4_dark a {
 .btn-addFood {
     display: block !important;
     margin: 20px auto !important;
-    height: 35px;
+    height: 40px !important;
     cursor: pointer;
     width: 20% !important;
     border-radius: 20px;
