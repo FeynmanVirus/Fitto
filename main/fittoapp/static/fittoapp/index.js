@@ -16,28 +16,6 @@ function ready() {
     console.log(avg_data)
 }
 
-function avgValuesFill() {
-    avgEnergy = document.getElementsByClassName('kcal')[0]
-    avgFat = document.getElementsByClassName('gm1')[0]
-    avgCarbs = document.getElementsByClassName('gm')[0]
-    avgProtein = document.getElementsByClassName('gm2')[0]
-    avgFiber = document.getElementsByClassName('gm3')[0]
-    avgBreakfast = document.getElementsByClassName('br1')[0]
-    avgLunch = document.getElementsByClassName('br2')[0]
-    avgDinner = document.getElementsByClassName('br3')[0]
-
-    console.log(avgEnergy)
-
-    avgEnergy.innerText = avg_data['avgEnergy']['energy__avg']
-    avgFat.innerText = avg_data['avgFat']['fat__avg']
-    avgProtein.innerText = avg_data['avgProtein']['protein__avg']
-    avgCarbs.innerText = avg_data['avgCarbs']['carbs__avg']
-    avgFiber.innerText = avg_data['avgFiber']['fiber__avg']
-    avgBreakfast.innerText = avg_data['avgBreakfast']['breakfast__avg']
-    avgLunch.innerText = avg_data['avgLunch']['lunch__avg']
-    avgDinner.innerText = avg_data['avgDinner']['dinner__avg']
-}
-
 function progressBarFill() {
     // bar for width
     energyBar = document.getElementById('energyprogress')
@@ -175,6 +153,28 @@ function createCalorieChart() {
             plugins: [doughnutCentreText],
         
     });
+}
+
+function avgValuesFill() {
+    avgEnergy = document.getElementsByClassName('kcal')[0]
+    avgFat = document.getElementsByClassName('gm1')[0]
+    avgCarbs = document.getElementsByClassName('gm')[0]
+    avgProtein = document.getElementsByClassName('gm2')[0]
+    avgFiber = document.getElementsByClassName('gm3')[0]
+    avgBreakfast = document.getElementsByClassName('br1')[0]
+    avgLunch = document.getElementsByClassName('br2')[0]
+    avgDinner = document.getElementsByClassName('br3')[0]
+
+    console.log(avgEnergy)
+
+    avgEnergy.innerText = avg_data['avgEnergy']['energy__avg']
+    avgFat.innerText = avg_data['avgFat']['fat__avg']
+    avgProtein.innerText = avg_data['avgProtein']['protein__avg']
+    avgCarbs.innerText = avg_data['avgCarbs']['carbs__avg']
+    avgFiber.innerText = avg_data['avgFiber']['fiber__avg']
+    avgBreakfast.innerText = avg_data['avgBreakfast']['breakfast__avg']
+    avgLunch.innerText = avg_data['avgLunch']['lunch__avg']
+    avgDinner.innerText = avg_data['avgDinner']['dinner__avg']
 }
 
 function createCalorieBurnedChart() {
