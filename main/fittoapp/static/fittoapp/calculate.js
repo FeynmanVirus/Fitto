@@ -332,7 +332,6 @@ function updateChart(chart, diaryData, plugin) {
 function sessionDiaryFunc(diaryData) {
 
     console.log('sessiondiaryfunc called')
-    console.log(diaryData)
     const xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {

@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
 from django.core import serializers
 from django.db.models import Avg
-from fittoapp.models import FoodDiary, UserBodyReq
+from fittoapp.models import FoodDiary, UserBodyReq, ActivityDiary
 from users.models import User
 import json
 from datetime import date
@@ -22,7 +22,19 @@ def index(request):
         create = FoodDiary.objects.get_or_create(date=today_string, user=u)
         food_data = FoodDiary.objects.filter(date=today_string, user=u)
         food_data_aggregate = FoodDiary.objects.filter(user=u)
+        activity_data = ActivityDiary.objects.filter(date=today_string, user=u)
 
+        food_data_energy = food_data_aggregate.values('energy', 'date')
+        #user body requirements data
+        b = UserBodyReq.objects.filter(user=u)
+
+        food_data_energy_list = []
+        food_data_date_list = []
+
+        for energy in food_data_energy:
+                food_data_energy_list.append(energy['energy'])
+                food_data_date_list.append(energy['date'].strftime("%d"))
+        #avg intakes
         avg_data = {
                 'avgEnergy': food_data_aggregate.aggregate(Avg('energy')),
                 'avgProtein': food_data_aggregate.aggregate(Avg('protein')),
@@ -35,22 +47,23 @@ def index(request):
                 
         }
 
-        #user body requirements data
-        b = UserBodyReq.objects.filter(user=u)
-        print(b)
-
-        #avg intakes
-
         #jsonify
+        # food_data_energy_json = serializers.serialize("json", food_data_energy)
+
         bmr_data_json = serializers.serialize("json", b)
-        print(bmr_data_json)
         food_data_json = serializers.serialize("json", food_data)
-        print(food_data_json)
+        activity_data_json = serializers.serialize("json", activity_data)
+
         avg_data_json = json.dumps(avg_data)
+        food_data_energy_list_json = json.dumps(food_data_energy_list)
+        food_data_date_list_json = json.dumps(food_data_date_list)
         return render(request, 'fittoapp/index.html', {
                 "food_data": food_data_json,
                 "bmr_data": bmr_data_json,
                 "avg_data": avg_data_json,
+                "food_data_energy": food_data_energy_list_json,
+                "food_data_date": food_data_date_list_json,
+                "activity_data": activity_data_json,
         })
 
 @csrf_exempt
@@ -90,5 +103,24 @@ def foodentry(request):
                 return HttpResponse("Success")
         return HttpResponse('failure')
 
+@csrf_exempt
+def activityentry(request):
+        if request.method == 'POST':
+                xhr_bytesvalue = request.body
+                data_decode = xhr_bytesvalue.decode("UTF-8").replace("'", '"')
+                data = json.loads(data_decode)
+                u = User.objects.get(pk=request.user.id)
+        
+                activity_done = data['activity_done']
+                calories_burned = data['calories_burned']
+
+                p = ActivityDiary.objects.create(user=u, activity_done=activity_done, calories_burned=calories_burned, date=today_string)
+
+                return HttpResponse("Success")
+        return HttpResponse('failure')
+
 def calorie(request):
         return render(request, 'fittoapp/calc.html')
+
+def activity(request):
+        return render(request, 'fittoapp/activity.html')

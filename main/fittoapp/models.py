@@ -30,3 +30,12 @@ class UserBodyReq(models.Model):
     def __str__(self):
         return f"{self.user.email} has a BMR of {self.bmr}, a TDEE of {self.tdee} and daily intake of {self.daily_intake} kcal"
     
+class ActivityDiary(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="user", related_name="activitydone")
+    activity_done = models.CharField(max_length=50, null=True)
+    calories_burned = models.IntegerField(null=True, default=0)
+    date = models.DateField(null=True, default=f"{today.year}-{today.month}-{today.day}")
+
+    def __str__(self):
+        return f"{self.user.email} did {self.activity_done} and burned {self.calories_burned} on {self.date}"
+    

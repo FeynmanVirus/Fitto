@@ -7,13 +7,17 @@ if (document.readyState == 'loading') {
 function ready() {
     const calorieSummary = document.getElementsByClassName('calorie-summary')
     food_data[0]['fields'].energy > 0 ? createCalorieChart() : createEmptyCalorieChart()
-    createCalorieBurnedChart();
+    
     createCalorieRemainingChart();
     createProgressChart();
     // createProgressBars();
     progressBarFill();
     avgValuesFill();
-    console.log(avg_data)
+    var burned_calorie_by_activity = 0
+    for (let i = 0; i < activity_data.length; i++) {
+        burned_calorie_by_activity += activity_data[i]['fields']['calories_burned']
+    }
+    createCalorieBurnedChart(burned_calorie_by_activity);
 }
 
 function progressBarFill() {
@@ -177,7 +181,7 @@ function avgValuesFill() {
     avgDinner.innerText = avg_data['avgDinner']['dinner__avg']
 }
 
-function createCalorieBurnedChart() {
+function createCalorieBurnedChart(burned_calorie_by_activity) {
 
     const calorieBurnedDoughnutChart = document.getElementById('calorieBurnedChart');
 
@@ -193,7 +197,7 @@ function createCalorieBurnedChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText(bmr_data[0]['fields']['tdee'] + " kcal", xCoor, yCoor); 
+            ctx.fillText(burned_calorie_by_activity + bmr_data[0]['fields']['tdee'] + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -207,7 +211,7 @@ function createCalorieBurnedChart() {
               ],
             datasets: [{
                 label: 'Nutritional value: ',
-                data: [bmr_data[0]['fields']['tdee'] - bmr_data[0]['fields']['bmr'], bmr_data[0]['fields']['bmr']],
+                data: [burned_calorie_by_activity + bmr_data[0]['fields']['tdee'] - bmr_data[0]['fields']['bmr'], bmr_data[0]['fields']['bmr']],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
                     'rgb(255, 159, 64)'
@@ -453,15 +457,22 @@ function createProgressChart() {
     const getProgressChart = document.getElementById('progressChart');
 
     const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July'],
+    labels: [],
     datasets: [{
-        label: 'My First Dataset',
-        data: [0, 40, 59, 80, 81, 56, 55, 65],
+        label: 'Calories',
+        data: [],
         fill: false,
         borderColor: 'rgb(75, 192, 192)',
         tension: 0.1
     }]
     };
+    for (let i = 0; i < food_data_energy.length; i++){
+        data.datasets[0].data.push(food_data_energy[i])
+        console.log(food_data_energy[i])
+    }
+    for (let i = food_data_date[0]; i < 32; i++) {
+        data.labels.push(i)
+    }
     const config = {
         type: 'line',
         data: data,

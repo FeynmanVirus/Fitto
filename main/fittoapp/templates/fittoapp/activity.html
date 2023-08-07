@@ -1,0 +1,56 @@
+{% extends 'fittoapp/layout.html' %}
+{% load static %}
+
+{% block title%} - activity{% endblock %}
+
+{% block link %}
+<script defer src="{% static 'fittoapp/activity.js' %}"></script>
+<link rel="stylesheet" href="{% static 'fittoapp/styles-activity.css' %}">
+<link rel="stylesheet" href="{% static 'fittoapp/styles-calc.css'%}"> 
+{% endblock %}
+
+{% block body%}
+    <h1 id="title">Add exercise</h1>
+
+    <fieldset class="main-input">
+        <form>
+            <label for="food-input">
+                <input type="text" name="food-input" id="food-input" autocomplete="off" placeholder="Enter activities performed">
+            </label>
+            <button id="calculate-btn" type="button">calculate</button>
+        </form>
+    </fieldset>
+    <div class="table_container">
+        <table class="boostrap4_dark">
+            
+        </table>
+    </div>
+
+    <dialog class="modal" id="modal">
+        
+        <div class="dialogTitle"> 
+            <span id="foodTitleDialog"></span>
+            <button id="closeButton">&times;</button>
+        </div>
+        <div class="box-burned">
+            <form class="formserving form-burned">
+                <label for="effotLevel">Effort Level:
+                    <span id="effortlevel"></span>
+                </label>
+                <label for="duration">Duration:
+                    <input type="text" name="duration" id="duration" value=""> Min
+                </label>
+                <label for="energyBurned">Energy Burned: 
+                    <input type="text" name="energyBurned" id="energyBurned"> Kcal
+                </label>
+            </form>
+        </div>
+            <div class="dialogaddFood">
+                <button class="btn-addFood" id="btn-dialogAddFood" type="button">Add Exercise</button>
+            </div>
+    </dialog>
+
+    <script>
+        const csrftoken = '{{ csrf_token }}'
+    </script>
+{% endblock %}
