@@ -109,6 +109,32 @@
   top: 252px;
   left: 800px;
 }
+
+.br1,
+.br2,
+.br3 {
+  position: absolute;
+  top: 163px;
+  left: 618px;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+}
+
+.br1  {
+  top: 133px;
+  left: 1497px;
+}
+.br2 {
+  top: 201px;
+  left: 1500px;
+}
+.br3 {
+  top: 276px;
+  left: 1500px;
+}
+
+
+
 .vector-icon1,
 .vector-icon2,
 .vector-icon3,
@@ -222,4 +248,34 @@
   font-family: var(--font-inter);
 }
 
+.charttext {
+  display: block !important;
+  
+}
+#consumed {
+  display: inline-block;
+  position: absolute;
+  top: 766px !important;
+  left: 385px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#burned {
+  display: inline-block;
+  position: absolute;
+  top: 766px !important;
+  left: 611px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+#remaining {
+  display: inline-block;
+  position: absolute;
+  top: 766px !important;
+  left: 812px;
+  font-size: 16px;
+  font-weight: 500;
+}
 

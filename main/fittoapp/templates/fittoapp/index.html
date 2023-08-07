@@ -49,7 +49,9 @@
             <img class="group-icon" alt="" src="{% static 'fittoapp/public/breakfast-svgrepo-com.svg' %}" /> 
             <img class="group-icon1" alt="" src="{% static 'fittoapp/public/lunch-svgrepo-com.svg' %}" /> 
             <img class="group-icon2" alt="" src="{% static 'fittoapp/public/dinner-svgrepo-com.svg' %}" /> 
-      
+            <div class="br1"></div>
+            <div class="br2"></div>
+            <div class="br3"></div>
 
           </div>
         <div class="summary-container">
@@ -63,6 +65,11 @@
                     </div>
                     <div id="calorieRemainingChartDiv">
                         <canvas id="calorieRemainingChart"></canvas>
+                    </div>
+                    <div class="charttext">
+                        <span id="consumed">Consumed</span>
+                        <span id="burned">Burned</span>
+                        <span id="remaining">Remaining</span>
                     </div>
                 </div>
             </div>
@@ -117,5 +124,7 @@
 
     <script>
         const food_data = JSON.parse('{{ food_data | safe }}')
+        const bmr_data = JSON.parse('{{ bmr_data | safe}}')
+        const avg_data = JSON.parse('{{ avg_data | safe }}')
     </script>
     {% endblock %}

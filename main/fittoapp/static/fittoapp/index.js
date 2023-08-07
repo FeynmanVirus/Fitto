@@ -12,8 +12,30 @@ function ready() {
     createProgressChart();
     // createProgressBars();
     progressBarFill();
-    console.log(food_data)
-    console.log(food_data[0]['fields'].energy)
+    avgValuesFill();
+    console.log(avg_data)
+}
+
+function avgValuesFill() {
+    avgEnergy = document.getElementsByClassName('kcal')[0]
+    avgFat = document.getElementsByClassName('gm1')[0]
+    avgCarbs = document.getElementsByClassName('gm')[0]
+    avgProtein = document.getElementsByClassName('gm2')[0]
+    avgFiber = document.getElementsByClassName('gm3')[0]
+    avgBreakfast = document.getElementsByClassName('br1')[0]
+    avgLunch = document.getElementsByClassName('br2')[0]
+    avgDinner = document.getElementsByClassName('br3')[0]
+
+    console.log(avgEnergy)
+
+    avgEnergy.innerText = avg_data['avgEnergy']['energy__avg']
+    avgFat.innerText = avg_data['avgFat']['fat__avg']
+    avgProtein.innerText = avg_data['avgProtein']['protein__avg']
+    avgCarbs.innerText = avg_data['avgCarbs']['carbs__avg']
+    avgFiber.innerText = avg_data['avgFiber']['fiber__avg']
+    avgBreakfast.innerText = avg_data['avgBreakfast']['breakfast__avg']
+    avgLunch.innerText = avg_data['avgLunch']['lunch__avg']
+    avgDinner.innerText = avg_data['avgDinner']['dinner__avg']
 }
 
 function progressBarFill() {
@@ -171,7 +193,7 @@ function createCalorieBurnedChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText(food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
+            ctx.fillText(bmr_data[0]['fields']['tdee'] + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -180,12 +202,12 @@ function createCalorieBurnedChart() {
         type: 'doughnut',
         data: {
             labels: [
-                'Burned',
+                'Activity',
                 'BMR',
               ],
             datasets: [{
                 label: 'Nutritional value: ',
-                data: [10, 80],
+                data: [bmr_data[0]['fields']['tdee'] - bmr_data[0]['fields']['bmr'], bmr_data[0]['fields']['bmr']],
                 backgroundColor: [
                     'rgb(255, 99, 132)',
                     'rgb(255, 159, 64)'
@@ -230,7 +252,7 @@ function createCalorieRemainingChart() {
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText(2000 - food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
+            ctx.fillText(bmr_data[0]['fields']['daily_intake'] - food_data[0]['fields'].energy + " kcal", xCoor, yCoor); 
 
         }
     }
@@ -240,7 +262,7 @@ function createCalorieRemainingChart() {
         labels: ['Consumed', 'Remaining'],
         datasets: [{
             label: 'Consumed, Remaining',
-            data: [food_data[0]['fields'].energy, 2000 - food_data[0]['fields'].energy],
+            data: [food_data[0]['fields'].energy, bmr_data[0]['fields']['daily_intake'] - food_data[0]['fields'].energy],
             backgroundColor: [
                 '#f6eded',
                 '#9da0ad'

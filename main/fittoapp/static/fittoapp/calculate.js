@@ -118,6 +118,7 @@ async function createTable(dict) {
                 'Carbs': globalDict[0][key][0]['CHOCDF'].toFixed(2),
                 'Fat': globalDict[0][key][0]['FAT'].toFixed(2),
                 'Fiber': globalDict[0][key][0]['FIBTG'].toFixed(2),
+                'timeofday': 'Breakfast',
             }
             sessionDiaryFunc(diaryData)
         })
@@ -134,6 +135,7 @@ function showDetails(event) {
 
     const selectDropdown = document.getElementById('servingtype');
     const servingSizeBox = document.getElementById('serving')
+    const timeOfDayBox = document.getElementById('timeofday')
 
     for(const [serving, value] of Object.entries(globalDict[1])) {
         const optionElement = document.createElement('option') 
@@ -146,6 +148,8 @@ function showDetails(event) {
     let selectedOption = globalDict[0][key][2]['weight'].toFixed(2);
     let servingSizeNumber = 1;
     let selectedWeight = 100
+    let timeofday = timeOfDayBox.value;
+    console.log(timeofday)
     
     diaryData = {
        'Energy': ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
@@ -153,6 +157,7 @@ function showDetails(event) {
        'Carbs': ((globalDict[0][key][0]['CHOCDF'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
        'Fat': ((globalDict[0][key][0]['FAT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
        'Fiber': ((globalDict[0][key][0]['FIBTG'] / 100) * selectedWeight * servingSizeNumber).toFixed(2),
+       'timeofday' : timeofday,
    }
     
     
@@ -259,8 +264,11 @@ function showDetails(event) {
         updateChart(progressChart, diaryData, doughnutCentreText)
     })
 
-
-
+    timeOfDayBox.addEventListener('change', () => {
+        timeofday = timeOfDayBox.value
+        console.log(timeofday)
+        diaryData['timeofday'] = timeofday
+    })
 
     
     //show the modal

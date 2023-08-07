@@ -7,13 +7,9 @@
     --cool: #4a41d8;
 }
 
-* {
-    /* border: 1px solid white; */
-}
-
 body {
     background-color: var(--background);
-    font-family: "Open Sans", sans-serif;
+    font-family: "Manrope", sans-serif;
     color: var(--text);
     overflow: hidden;
 }
@@ -143,7 +139,7 @@ nav a {
 
 #chartContainer {
     display: flex;
-    margin: auto;
+    margin: 100px auto;
     justify-content: space-evenly;
     
 }
@@ -214,6 +210,7 @@ nav a {
     background: var(--cool);
     z-index: 1;
 }
+
 
 #proteinnumbers {
     position: absolute;
