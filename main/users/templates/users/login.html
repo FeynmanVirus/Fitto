@@ -4,6 +4,7 @@
 {% block title %} - register {% endblock %}
 {% block link %} 
 <link rel="stylesheet" href="{% static 'fittoapp/index.css'%}">
+<link rel="stylesheet" href="{% static 'users/reg-style.css'%}">
 {% endblock%}
 
 {% block body %}      
@@ -11,17 +12,17 @@
 
 
 <!--Register--> 
-<div class="container">
-	<h1>Login</h1>
-	<form method="POST">
+<div class="container" id="container-login">
+	<h1 class="heading">Login</h1>
+	<form method="POST" class="form-container">
 		{% csrf_token %}   
         {{ form.as_p }}   
         {% comment %} <input type="text" name="username" placeholder="Username">
         <input type="password" name="password1" placeholder="Password">
         <input type="password" name="password2" placeholder="Confirm Password">       {% endcomment %}
-		<button class="btn btn-primary" type="submit">Login</button>
+		<button class="login-btn" type="submit">Login</button>
 	</form>
-	<p class="text-center">Don't have an account?<a href="{% url 'register' %}">Register</a> instead.</p>
+	<p class="text-center">Don't have an account?<a href="{% url 'register' %}"> Register</a> instead.</p>
 </div>
 
 {% endblock %}
