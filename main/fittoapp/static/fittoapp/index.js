@@ -171,14 +171,14 @@ function avgValuesFill() {
 
     console.log(avgEnergy)
 
-    avgEnergy.innerText = avg_data['avgEnergy']['energy__avg']
-    avgFat.innerText = avg_data['avgFat']['fat__avg']
-    avgProtein.innerText = avg_data['avgProtein']['protein__avg']
-    avgCarbs.innerText = avg_data['avgCarbs']['carbs__avg']
-    avgFiber.innerText = avg_data['avgFiber']['fiber__avg']
-    avgBreakfast.innerText = avg_data['avgBreakfast']['breakfast__avg']
-    avgLunch.innerText = avg_data['avgLunch']['lunch__avg']
-    avgDinner.innerText = avg_data['avgDinner']['dinner__avg']
+    avgEnergy.innerText = avg_data['avgEnergy']['energy__avg'].toFixed(0) + " kcal"
+    avgFat.innerText = avg_data['avgFat']['fat__avg'].toFixed(0) + "g"
+    avgProtein.innerText = avg_data['avgProtein']['protein__avg'].toFixed(0) + "g"
+    avgCarbs.innerText = avg_data['avgCarbs']['carbs__avg'].toFixed(0) + "g"
+    avgFiber.innerText = avg_data['avgFiber']['fiber__avg'].toFixed(0) + "g"
+    avgBreakfast.innerText = avg_data['avgBreakfast']['breakfast__avg'].toFixed(0) + "g"
+    avgLunch.innerText = avg_data['avgLunch']['lunch__avg'].toFixed(0) + "g"
+    avgDinner.innerText = avg_data['avgDinner']['dinner__avg'].toFixed(0) + "g"
 }
 
 function createCalorieBurnedChart(burned_calorie_by_activity) {

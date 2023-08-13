@@ -14,7 +14,7 @@
     <fieldset class="main-input">
         <form>
             <label for="food-input">
-                <input type="text" name="food-input" id="food-input" autocomplete="off" placeholder="Enter what you ate today">
+                <input type="text" name="food-input" id="food-input" autofocus="on" autocomplete="off" placeholder="Enter what you ate today">
             </label>
             <button id="calculate-btn" type="button">calculate</button>
         </form>
@@ -29,7 +29,7 @@
             </table>
         </div>
        
-        <dialog class="modal" id="modal">
+        <dialog class="modal" id="modal" role="dialog" aria-modal="true">
         
             <div class="dialogTitle"> 
                 <span id="foodTitleDialog"></span>
@@ -41,7 +41,7 @@
                     <canvas id="myChart" width="20%" height="20%"></canvas>
                 </div>
                 <div class="nutrition-amounts">
-                    <ul>
+                    <ul class="macrolist">
                         <li><span class="dot" id="roundProtein"></span class="macronutrient" style="color: white;">Protein: <span id="proteinAmt"></span> <span class="percInline">(<span id="percProtein"></span>)</li>
                         <li><span class="dot" id="roundcarbs"></span class="macronutrient">Carbs: <span id="carbsAmt"></span> <span id="percInline">(<span id="percCarbs"></span></span>)</li>
                         <li><span class="dot" id="roundfat"></span class="macronutrient">Fat: <span id="fatAmt"></span> <span id="percInline"></span>(<span id="percFat"></span>)</li>
@@ -62,8 +62,6 @@
                         <label for="serving">Serving Size
                             <input type="text" name="serving" value="1" id="serving">
                             <select name="servingtype" id="servingtype">
-                                <option id="defaultOption" value=""></option>
-
                             </select>
                         </label>
                     </form>

@@ -23,7 +23,7 @@ def index(request):
         food_data = FoodDiary.objects.filter(date=today_string, user=u)
         food_data_aggregate = FoodDiary.objects.filter(user=u)
         activity_data = ActivityDiary.objects.filter(date=today_string, user=u)
-
+    
         food_data_energy = food_data_aggregate.values('energy', 'date')
         #user body requirements data
         b = UserBodyReq.objects.filter(user=u)

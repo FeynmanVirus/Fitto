@@ -8,7 +8,7 @@ function ready() {
     const calculateBtn = document.getElementById('calculate-btn');
 
     calculateBtn.addEventListener('click', calculate);
-
+     
 }
 
 var globalDict = {};
@@ -136,11 +136,11 @@ function showDetails(event) {
     const selectDropdown = document.getElementById('servingtype');
     const servingSizeBox = document.getElementById('serving')
     const timeOfDayBox = document.getElementById('timeofday')
-
+    globalDict[1] = Object.assign({ 'Base' : 100}, globalDict[1])
     for(const [serving, value] of Object.entries(globalDict[1])) {
         const optionElement = document.createElement('option') 
         optionElement.innerHTML = `
-            <option value=${value}>${serving} - ${value}</option>
+            <option value=${value}>${serving} - ${value}g</option>
         `
         selectDropdown.appendChild(optionElement)
     }
@@ -171,10 +171,10 @@ function showDetails(event) {
             const xCoor = chart.getDatasetMeta(0).data[0].x;
             const yCoor = chart.getDatasetMeta(0).data[0].y;
             ctx.font = 'bold 15px sans-serif';
-            ctx.fillStyle = 'black';
+            ctx.fillStyle = 'white';
             ctx.textAlign = 'center'; 
             ctx.textBaseline = 'middle';
-            ctx.fillText(globalDict[0][key][0]['ENERC_KCAL'].toFixed(0) + "kcal", xCoor, yCoor); 
+            ctx.fillText(parseInt(diaryData['Energy']).toFixed(0) + "kcal", xCoor, yCoor); 
 
         }
     } 
@@ -203,14 +203,15 @@ function showDetails(event) {
                 
         },
         options: {
-            borderWidth: 5,
-            borderRadius: 2,
+            borderWidth: 0,
+            // borderRadius: 2,
             hoverBorderWidth: 0,
             plugins: {
                 legend: {
                     display: false,
                 }
             },
+            cutout: 45,
             },
             plugins: [doughnutCentreText]
         
@@ -237,12 +238,13 @@ function showDetails(event) {
     document.getElementById('foodTitleDialog').innerText = key;
 
     // default food serving
-    document.getElementById('defaultOption').innerText = "100g";
+    // document.getElementById('defaultOption').innerText = "Base - 100g";
 
     // serving size changes
     selectDropdown.addEventListener('change', () => {
         selectedOption = selectDropdown.value.split("- ");
-        selectedWeight = parseInt(selectedOption[1])
+        selectedWeight = parseInt(selectedOption[1].slice(0, -1))
+        console.log(selectedWeight)
   
         diaryData['Energy'] = ((globalDict[0][key][0]['ENERC_KCAL'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
         diaryData['Protein'] = ((globalDict[0][key][0]['PROCNT'] / 100) * selectedWeight * servingSizeNumber).toFixed(2)
@@ -289,6 +291,9 @@ function showDetails(event) {
     })
     modal.addEventListener("click", e => {
         const dialogDimensions = modal.getBoundingClientRect()
+        if (e.target.nodeName === 'SELECT' || e.target.nodeName === 'OPTION') {
+            return;
+        }
         if (
           e.clientX < dialogDimensions.left ||
           e.clientX > dialogDimensions.right ||
@@ -297,6 +302,7 @@ function showDetails(event) {
         ) {
           modal.close();    
           progressChart.destroy();
+          console.log('destroyed')
         }
       })
     
@@ -306,10 +312,6 @@ function updateChart(chart, diaryData, plugin) {
     // updating data
     chart.data.datasets[0].data = [diaryData['Protein'], diaryData['Carbs'], diaryData['Fat']]
 
-    // updating fillText 
-    // const xCoor = chart.getDatasetMeta(0).data[0].x;
-    // const yCoor = chart.getDatasetMeta(0).data[0].y;
-    // plugin.beforeDatasetsDraw.ctx.fillText(diaryData['Energy'] + " kcal", xCoor, yCoor)
     chart.update()
 
     totalGrams = parseFloat(diaryData['Protein']) + parseFloat(diaryData['Carbs']) + parseFloat(diaryData['Fat'])

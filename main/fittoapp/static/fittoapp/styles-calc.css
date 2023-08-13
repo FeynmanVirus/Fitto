@@ -7,6 +7,11 @@
     --cool: #4a41d8;
 }
 
+@media(min-width:576px){}
+@media(min-width:768px){}
+@media(min-width:992px){}
+@media(min-width:1200px){}
+
 body {
     background-color: var(--background);
     font-family: "Manrope", sans-serif;
@@ -42,7 +47,9 @@ fieldset {
     border: 0;
 }
 
-
+#foodTitleDialog {
+    color: var(--text);
+}
 
 #food-input {
     display: block;
@@ -155,8 +162,11 @@ table.bootstrap4_dark a {
     width: 60vw;
     height: 14.6vw;
     border-radius: 20px;
-    
-    /* background-color: var(--primary) */
+    border: none;
+    box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.1),
+     7px 7px 20px 0px rgba(0,0,0,.1),
+     4px 4px 5px 0px rgba(0,0,0,.1);
+    background-color: var(--primary)
 }
 
 #closeButton {
@@ -165,6 +175,7 @@ table.bootstrap4_dark a {
     border: none;
     background: none;
     font-size: 20px;
+    color: var(--text);
 }
 
 .chartDiv {
@@ -189,25 +200,28 @@ table.bootstrap4_dark a {
     justify-content: space-around;
     width: 50%;
     margin-top: 20px;
-    border: 1px solid gray;
-    border-radius: 10px;
 }
 
 .box2 {
     width: 50%;
     margin-top: 20px;
-    margin-left: 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
+    border-left: 1px solid gray;
     padding-top: 15px
 }
 
-
+.macrolist {
+    color: var(--text);
+}
 
 .formserving label {
     display: block;
     margin-top: 20px;
     margin-left: 5px;
+    color: var(--text);
+}
+
+.formserving {
+    margin-left: 10px;
 }
 
 .nutrition-summary .nutrition-amounts li {
@@ -231,18 +245,20 @@ table.bootstrap4_dark a {
 
 #timeofday {
     margin-left: 5px;
-    height: 25px;
+    height: 35px;
+    width: 115px;
 }
 
 #serving {
-    width: 30px;
-    height: 22px;
-    margin-left: 5px;
+    width: 36px;
+    height: 26px;
+    margin-left: 16px;
     border-radius: 5px;
 }
 
 #servingtype {
-    height: 25px;
+    height: 35px;
+    width: 115px;
     margin-left: 5px;
     border-radius: 5px;
 }
@@ -295,7 +311,7 @@ table.bootstrap4_dark a {
 .btn-table-style {
     border: none;
     border-radius: 7px;
-    font-size: 13px;
+    font-size: 14px;
     
 }
 

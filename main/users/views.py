@@ -47,7 +47,7 @@ def register_request(request):
             b = UserBodyReq(user=user, bmr=bmr, tdee=TDEE, daily_intake=daily_intake)
             b.save()
             login(request, user)
-            messages.success(request, "You have been registered successfully.")
+           
             return redirect('fittoapp:index')
     form = CustomUserForm()
     return render(request, "users/register.html", {
