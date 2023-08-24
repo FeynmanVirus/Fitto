@@ -6,7 +6,30 @@
 {% block link %} 
 <link rel="stylesheet" href="{% static 'fittoapp/index.css'%}">
 <link rel="stylesheet" href="{% static 'users/reg-style.css'%}">
-
+<style>
+	h1 {
+		text-align: center;
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+	}
+	form input, select {
+		width: 50%;
+		height: 25px;
+		margin: 0px auto;
+	}
+	form label {
+		font-weight: 600;
+		font-size: 16px;
+		margin-top: 10px;
+		margin-left: 470px;
+	}
+	.reg-btn {
+		width: 40%;
+		margin: 20px auto;
+}
+</style>
 {% endblock%}
 
 {% block body %}      
